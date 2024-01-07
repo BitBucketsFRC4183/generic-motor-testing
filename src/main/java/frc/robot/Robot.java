@@ -5,9 +5,18 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.SparkMaxPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 
 
 
@@ -19,12 +28,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot
 {
-    private static final String DEFAULT_AUTO = "Default";
-    private static final String CUSTOM_AUTO = "My Auto";
-    private String autoSelected;
-    private final SendableChooser<String> chooser = new SendableChooser<>();
-    
-    
+    XboxController joystick;
+
+
+    static final int deviceId1 = 1;
+    static final int deviceId2 = 2;
+    static final int deviceId3 = 3;
+    static final int deviceId4 = 4;
+
+    static final double velocity_units = 2;
+
+
+    CANSparkMax sparkmax1;
+    CANSparkMax sparkmax2;
+    CANSparkMax sparkmax3;
+    CANSparkMax sparkmax4;
+
+    SparkMaxPIDController controller1;
+
+
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -32,9 +54,20 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        chooser.setDefaultOption("Default Auto", DEFAULT_AUTO);
-        chooser.addOption("My Auto", CUSTOM_AUTO);
-        SmartDashboard.putData("Auto choices", chooser);
+
+        sparkmax1 = new CANSparkMax(deviceId1, CANSparkMaxLowLevel.MotorType.kBrushless);
+        sparkmax2 = new CANSparkMax(deviceId2, CANSparkMaxLowLevel.MotorType.kBrushless);
+        sparkmax3 = new CANSparkMax(deviceId3, CANSparkMaxLowLevel.MotorType.kBrushless);
+        sparkmax4 = new CANSparkMax(deviceId4, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        controller1 = sparkmax1.getPIDController();
+        controller1 = sparkmax2.getPIDController();
+        controller1 = sparkmax3.getPIDController();
+        controller1 = sparkmax4.getPIDController();
+
+        joystick = new XboxController(0);
+
+
     }
     
     
@@ -46,7 +79,17 @@ public class Robot extends TimedRobot
      * SmartDashboard integrated updating.
      */
     @Override
-    public void robotPeriodic() {}
+    public void robotPeriodic() {
+
+        double leftFF = joystick.getLeftY();
+
+        controller1.setReference(velocity_units, CANSparkMax.ControlType.kVelocity);
+
+        sparkmax1.setVoltage(leftFF);
+        sparkmax2.setVoltage(leftFF);
+        sparkmax3.setVoltage(leftFF);
+        sparkmax4.setVoltage(leftFF);
+    }
     
     
     /**
