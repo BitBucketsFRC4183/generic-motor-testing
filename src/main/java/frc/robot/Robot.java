@@ -31,8 +31,8 @@ public class Robot extends TimedRobot
     XboxController joystick;
 
 
-    static final int deviceId1 = 1;
-    static final int deviceId2 = 2;
+    static final int deviceId1 = 3;
+    static final int deviceId2 = 19;
     static final int deviceId3 = 3;
     static final int deviceId4 = 4;
 
@@ -41,10 +41,11 @@ public class Robot extends TimedRobot
 
     CANSparkMax sparkmax1;
     CANSparkMax sparkmax2;
-    CANSparkMax sparkmax3;
-    CANSparkMax sparkmax4;
+    //CANSparkMax sparkmax3;
+    //CANSparkMax sparkmax4;
 
     SparkMaxPIDController controller1;
+    SparkMaxPIDController controller2;
 
 
     /**
@@ -57,13 +58,18 @@ public class Robot extends TimedRobot
 
         sparkmax1 = new CANSparkMax(deviceId1, CANSparkMaxLowLevel.MotorType.kBrushless);
         sparkmax2 = new CANSparkMax(deviceId2, CANSparkMaxLowLevel.MotorType.kBrushless);
-        sparkmax3 = new CANSparkMax(deviceId3, CANSparkMaxLowLevel.MotorType.kBrushless);
-        sparkmax4 = new CANSparkMax(deviceId4, CANSparkMaxLowLevel.MotorType.kBrushless);
+
+        sparkmax1.setSmartCurrentLimit(70);
+        sparkmax2.setSmartCurrentLimit(70);
+        /*sparkmax3 = new CANSparkMax(deviceId3, CANSparkMaxLowLevel.MotorType.kBrushless);
+        sparkmax4 = new CANSparkMax(deviceId4, CANSparkMaxLowLevel.MotorType.kBrushless);*/
+
+
 
         controller1 = sparkmax1.getPIDController();
-        controller1 = sparkmax2.getPIDController();
-        controller1 = sparkmax3.getPIDController();
-        controller1 = sparkmax4.getPIDController();
+        controller2 = sparkmax2.getPIDController();
+        /*controller1 = sparkmax3.getPIDController();
+        controller1 = sparkmax4.getPIDController();*/
 
         joystick = new XboxController(0);
 
@@ -83,12 +89,14 @@ public class Robot extends TimedRobot
 
         double leftFF = joystick.getLeftY();
 
-        controller1.setReference(velocity_units, CANSparkMax.ControlType.kVelocity);
 
-        sparkmax1.setVoltage(leftFF);
-        sparkmax2.setVoltage(leftFF);
-        sparkmax3.setVoltage(leftFF);
-        sparkmax4.setVoltage(leftFF);
+
+        //controller1.setReference(velocity_units, CANSparkMax.ControlType.kVelocity);
+
+        sparkmax1.setVoltage(-leftFF * 12);
+        sparkmax2.setVoltage(leftFF * 12);
+        //sparkmax3.setVoltage(leftFF);
+        //sparkmax4.setVoltage(leftFF);
     }
     
     
@@ -105,9 +113,9 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        autoSelected = chooser.getSelected();
+        /*autoSelected = chooser.getSelected();
         // autoSelected = SmartDashboard.getString("Auto Selector", DEFAULT_AUTO);
-        System.out.println("Auto selected: " + autoSelected);
+        System.out.println("Auto selected: " + autoSelected);*/
     }
     
     
@@ -115,7 +123,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousPeriodic()
     {
-        switch (autoSelected)
+        /*switch (autoSelected)
         {
             case CUSTOM_AUTO:
                 // Put custom auto code here
@@ -124,7 +132,7 @@ public class Robot extends TimedRobot
             default:
                 // Put default auto code here
                 break;
-        }
+        }*/
     }
     
     
