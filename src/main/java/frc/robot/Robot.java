@@ -31,8 +31,8 @@ public class Robot extends TimedRobot
     XboxController joystick;
 
 
-    static final int deviceId1 = 3;
-    static final int deviceId2 = 19;
+    static final int deviceId1 = 1;
+    static final int deviceId2 = 2;
     static final int deviceId3 = 3;
     static final int deviceId4 = 4;
 
@@ -46,6 +46,10 @@ public class Robot extends TimedRobot
 
     SparkMaxPIDController controller1;
     SparkMaxPIDController controller2;
+
+    //SparkMaxPIDController controller3;
+
+    //SparkMaxPIDController controller4;
 
 
     /**
@@ -100,40 +104,14 @@ public class Robot extends TimedRobot
     }
     
     
-    /**
-     * This autonomous (along with the chooser code above) shows how to select between different
-     * autonomous modes using the dashboard. The sendable chooser code works with the Java
-     * SmartDashboard. If you prefer the LabVIEW Dashboard, remove all of the chooser code and
-     * uncomment the getString line to get the auto name from the text box below the Gyro
-     *
-     * <p>You can add additional auto modes by adding additional comparisons to the switch structure
-     * below with additional strings. If using the SendableChooser make sure to add them to the
-     * chooser code above as well.
-     */
+
     @Override
-    public void autonomousInit()
-    {
-        /*autoSelected = chooser.getSelected();
-        // autoSelected = SmartDashboard.getString("Auto Selector", DEFAULT_AUTO);
-        System.out.println("Auto selected: " + autoSelected);*/
-    }
+    public void autonomousInit() {}
     
     
     /** This method is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic()
-    {
-        /*switch (autoSelected)
-        {
-            case CUSTOM_AUTO:
-                // Put custom auto code here
-                break;
-            case DEFAULT_AUTO:
-            default:
-                // Put default auto code here
-                break;
-        }*/
-    }
+    public void autonomousPeriodic() {}
     
     
     /** This method is called once when teleop is enabled. */
